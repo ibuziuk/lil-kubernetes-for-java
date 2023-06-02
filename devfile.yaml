@@ -17,7 +17,7 @@ commands:
     exec:
       label: "Package"
       component: tools
-      workingDir: ${PROJECTS_ROOT}app
+      workingDir: ${PROJECTS_ROOT}/app
       commandLine: "mvn clean package"
       group:
         kind: build
