@@ -1,0 +1,35 @@
+schemaVersion: 2.2.0
+metadata:
+  generateName: lil-kubernetes-for-java
+attributes:
+  controller.devfile.io/storage-type: ephemeral
+components:
+  - name: tools
+    container:
+      image: quay.io/devfile/universal-developer-image:ubi8-latest
+      volumeMounts:
+        - name: m2
+          path: /home/user/.m2
+      memoryLimit: 6G
+      memoryRequest: 512Mi
+      cpuRequest: 1000m
+      cpuLimit: 4000m
+      mountSources: true
+commands:
+  - id: package
+    exec:
+      label: "Package"
+      component: tools
+      workingDir: ${PROJECTS_ROOT}app
+      commandLine: "mvn clean package"
+      group:
+        kind: build
+        isDefault: true
+  - id: runtests
+    exec:
+      label: "Run"
+      component: tools
+      workingDir: ${PROJECTS_ROOT}/app
+      commandLine: "mvn spring-boot:run"
+      group:
+        kind: run
